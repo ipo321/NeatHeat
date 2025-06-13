@@ -11,7 +11,8 @@
 
 
 
-const int flameThreshold = 500; // int som man justerer etter øsnket sensitivitet. Denne brukes for og sette referansen til verdien som skal utløse flamme.
+const int flameThreshold = 500; // int som man justerer etter øsnket sensitivitet. Brukes for å sette nivået for registrering av flamme. 
+//IR sensoren ligger sirka på 25 og 300 som verdi når den registrerer en flamme. Når den ikke registrerer flamme ligger den mella 800 og 1000. 
 int FLAMME_PIN  = A0; //variabel som heter FLAMME_PIN som refererer til IR flammesensor.
 
 
@@ -47,7 +48,7 @@ void loop() {//dette er hoved loopen som kjøres når arduinoen er påslått.
 bool sjekkFlamme(){//egen metode for og sjekke flamme
     //analogread(FLAMME_PIN) vil gi åss en verdi mellom 0 og 1023. 
     return analogRead(FLAMME_PIN) < flameThreshold; //i vårt tillfelle vil verdien til flammesensorern være lavere en flameThreshold når den registrerer en flamme.
-    //sjekkFlamme metoden returnerer true hvis flammesensoren registrerer en flamme og false hvis den ikke registrerer flammer.
+    //sjekkFlamme metoden returnerer true hvis flammesensoren registrerer en flamme, hvis ikke returneres false.
   }
 
 
