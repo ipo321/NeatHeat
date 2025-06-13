@@ -54,7 +54,7 @@ bool sjekkFlamme(){//egen metode for og sjekke flamme
 
 void sendSignal() {
   byte signal = 0;  //det er ikke viktig hva jeg sender til den andre arduinoen, men heller at et signal sendes. 
-  //Derfor velger vi å sende en byte da det er den "laveste" mengden med data jeg kan sende, dette gjør at det går fortere og bruker mindre strøm. 
+  //Derfor velger vi å sende en byte siden det er en liten mengden data (8 bits), dette gjør at det går fortere og bruker mindre strøm. 
   
   bool harSendt = radio.write(&signal, sizeof(signal)); //i denne koden sender arduinoen ut signal til den andre arduinoen gjennom kanalen jeg åpnet i setup.
   // &signal gir minneadressen til hvor dataen til variabelen signal ligger, sizeof(signal) gir størrelsen på det som skal sendes. I dette tilfelle 1 byte. 
