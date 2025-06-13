@@ -1,4 +1,4 @@
-//kode for flammesensor modul.
+//kode for flammesensor modulen.
 //Flammesensor modulen har to essensielle komponenter. 1. IR flammesensor. 2. NRF24L01 reciver/transmitter.
 //Måten denne fungerer på: arduinonen sjekker om IR sensoren registrerer flamme, dette skjer 1 gang i sekundet.
 //sålenge sensoren ikke registrerer flammer vil arduinoen ikke gjøre noe annet.
@@ -8,7 +8,6 @@
 
 #include <SPI.h> //inkluderer bibliotek for å kunne bruke NRF Sender/reciver samt radio metoder.
 #include <RF24.h>
-
 
 
 const int flameThreshold = 500; // int som man justerer etter øsnket sensitivitet. Brukes for å sette nivået for registrering av flamme. 
@@ -27,7 +26,7 @@ void setup()  {
     pinMode(FLAMME_PIN, INPUT); //flamme sensor skal ta input.
 
     radio.begin();  // setter opp radio samt tillater meg å kalle på andre radio funskjoner fra bibloteket.
-    radio.openWritingPipe(address);  // åpner en kanal/pipe for å sende data på. og bruker adress som er "00001"
+    radio.openWritingPipe(address);  // åpner en kanal/pipe for og sende data på. og bruker adress som er "00001"
     radio.setPALevel(RF24_PA_MIN);  // setter senderstyrken til det laveste for å minimere strøm bruk, samt trenger man mindre strøm for sending. 
     radio.stopListening();  //radio stopper å lytte etter signaler, dette fordi vi bare ønsker å sende signaler med denne. 
 }
