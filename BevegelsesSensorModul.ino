@@ -36,9 +36,10 @@ void setup() {
   pinMode(BUZZER_PIN, OUTPUT);   // setter BUZZER_PIN til output. siden jeg ønsker å "sende" lyd ut av piesoen. (output).
   noTone(BUZZER_PIN);    //setter piezoen til noTone for at den ikke skal lage lyd. 
 
-  nesteSjekk = millis();   //setter  nesteTom og nesteSjekk lik millis() i det arduinoen starter  
+  bufferMillis = millis();  //millis() gir anntal millisekunder siden arduinoen ble slått på.
+  nesteSjekk = millis();   //setter bufferMillis, nesteTom og nesteSjekk lik millis() i det arduinoen starter  
   nesteTom = millis();   //(skulle være nesteTøm men ø blir kompilerings feil)
-  bufferMillis = millis();
+
 
     //setter opp NRF sender/motaker.
   radio.begin();   // setter opp radio og tillater meg og kalle på andre radio funskjoner.
@@ -56,8 +57,8 @@ void loop() {
 
   if(flamme == true && millis() > nesteSjekk && bevegelse()){   //denne linjen sjekker om 3 ting er sant/true (statements).
     //sjekken starter med å sjekke om variabelen flamme er true. hvis sann så ->
-    //-> sjekker den om millis() er større en nesteSjekk, millis() er anntal sekunder siden arduinoen ble slått på. hvis sann så->
-    //-> sjekker den om bevegelse() er true. metoden bevegelse() returnerer true hvis bevegelses sensoren registrerer bevegelse.
+    //-> sjekk om millis() er større en nesteSjekk, hvis sann så->
+    //-> sjekk om bevegelse() er true. metoden bevegelse() returnerer true hvis bevegelses sensoren registrerer bevegelse.
     //hvis alle disse stemmer går vi inn i denne kodeblokken. nå er det flamme, millis() er større en NesteSjekk og noen beveger seg forran sensoren.  
 
     alarm(); //kaller på alarm metoden, som får piesoen til "slå alarm".
@@ -93,8 +94,8 @@ void loop() {
 void alarm(){ //metode for at piezoen skal lage alarm lyd.
       Serial.println("Alarm"); //*skriver til monitor for å hjelpe koderen når man tester.
       for(int i = 0; i < 5; i++){ //dene blokken kjører 5 ganger. denne kan man justre etter hvor mange "beeps" man vil ha.
-        tone(BUZZER_PIN, 600);  //tone() er innebygt i arduino IDE. denne metoden sender "bølge" til BUZZER_PIN.
-        //tallet 600 er frekvensen man øsnker at piezoen skal vibrere i. Dette vil da tilsvare hvilke tone man får. høyere tall = lysere tone. 
+        tone(BUZZER_PIN, 600);  //tone() er innebygt i arduino . denne metoden sender "bølge" til BUZZER_PIN.
+        //tallet 600 er frekvensen (hz) man øsnker at piezoen skal vibrere i. Dette vil da tilsvare hvilke tone man får. høyere tall = lysere tone. 
         delay(500);  //jeg setter et delay på et havlt sekund. Dette vil gjøre at piezoen holder en konstant tone i et halt sekund.
         noTone(BUZZER_PIN);  //når delayen er ferdig etter et halt sekund setter jeg noTone(BUZZER_PIN) som gjør at pezoen ikke lager noe lyd.
         delay(300);  //jeg venter så i 0,3 sekunder hvor piesoen ikke lager lyd.
