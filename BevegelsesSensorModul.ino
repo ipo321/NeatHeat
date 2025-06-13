@@ -1,8 +1,8 @@
 //Kode for bevegelses Sensoren modul.
-//Bevegelses Sensor modulen har 3 essensielle moduler. 1. HC-SR505 PIR bevegelses sensor. 2. piezo høytaler. 3. NRF2010 reciver/transmitter. 
+//Bevegelses Sensor modulen har 3 essensielle komponenter. 1. HC-SR505 PIR bevegelses sensor. 2. piezo høytaler. 3. NRF2010 reciver/transmitter. 
 //Når jeg bruker ordet NRF i koden referer jeg til modulen som brukes for å mota signaler. (radio).
 //koden fungerer med at arduinoen står og lytter etter signaler. i perioder hvor ingen signal motas gjør ikke arduinoen noe annet en å sjekke etter signaler. 
-//Når arduinoen motar ett signal via NRF modulen (radio) vil registrere dette som at det er flamme (flamme = sann).
+//Når arduinoen mottar ett signal via NRF modulen (radio) vil registrere dette som at det er flamme (flamme = sann).
 //sålenge flamme er sann vil arduinoen ha "aktivert" bevegelses sensoren.
 //Dette gjøres ved å sjekke om bevegelses sensoren registrerer bevegelser.
 //hvis den registrerer bevegelser vil piezo høytaleren slå alarm. 
@@ -10,7 +10,7 @@
 //NB alle kommentarene som starter med "*" har som formål å hjelpe koderen når man tester og justerer koden. Disse kan kommenteres ut eller fjernes om ønskelig.  
 
 
-#include <SPI.h> //legger til biblotek som tillater meg og bruke NRF senneren.
+#include <SPI.h> //legger til bibliotek som tillater meg og bruke NRF senderen.
 #include <RF24.h>
 #include <nRF24L01.h>
 
@@ -54,9 +54,9 @@ void setup() {
 
 void loop() {
 
-  if(flamme == true && millis() > nesteSjekk && bevegelse()){   //denne linjen sjekker om 3 ting er sant/true (statments).
+  if(flamme == true && millis() > nesteSjekk && bevegelse()){   //denne linjen sjekker om 3 ting er sant/true (statements).
     //sjekken starter med å sjekke om variabelen flamme er true. hvis sann så ->
-    //-> sjekker den om millis() er større en nesteSjekk, millis() er anntal sekunder siden aruduinoen ble slått på. hvis sann så->
+    //-> sjekker den om millis() er større en nesteSjekk, millis() er anntal sekunder siden arduinoen ble slått på. hvis sann så->
     //-> sjekker den om bevegelse() er true. metoden bevegelse() returnerer true hvis bevegelses sensoren registrerer bevegelse.
     //hvis alle disse stemmer går vi inn i denne kodeblokken. nå er det flamme, millis() er større en NesteSjekk og noen beveger seg forran sensoren.  
 
@@ -77,7 +77,6 @@ void loop() {
   }else if(millis() > bufferMillis){
     flamme = false;} //hvis radio.available() ikke har motatt noen signaler og man ikke venter på bufferMillis setter vi flamme til false.
 
-
   if(millis() > nesteTom){ //her bruker vi samme prinsipp som med nesteSjekk. 
       radio.flush_rx();//radio.flush_rx() gjør at vi nulstiller køen til radioen. hvis det står mange "signaler" i kø i radioen blir disse nullstilt.
       //Formålet med denne er og sjekke om lyset er blitt slukket. siden vi nå fjerner eventuelle køer av signaler vil vi nå vente på ett nytt signal.
@@ -86,8 +85,8 @@ void loop() {
 
     bufferMillis = millis() + 1050;//formålet med bufferMills er at etter vi har tømmt radioen, gir vi NRF motakeren tid til å motta ett nytt signal om flammen fortsatt er tent
     nesteTom = millis() + 3000;//setter neste tom til 3 sekunder mere en millis() intervall på å tømme køen er 3 sekunder. 
-
   }
+   
 }
 
 
